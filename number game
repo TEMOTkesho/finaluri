@@ -1,0 +1,109 @@
+class Numbergame
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("      Guess the Number Game       ");
+        Console.WriteLine("----------------------------------");
+        Console.WriteLine("             #####");
+        Console.WriteLine("            #     #");
+        Console.WriteLine("                  #");
+        Console.WriteLine("                 #");
+        Console.WriteLine("               ##");
+        Console.WriteLine("               #");
+        Console.WriteLine("               ");
+        Console.WriteLine("               #");
+        Console.WriteLine("----------------------------------");
+
+        while (true)
+        {
+            Console.WriteLine("\nSelect a difficulty level:");
+            Console.WriteLine("1. Easy       (1-10)");
+            Console.WriteLine("2. Medium     (1-100)");
+            Console.WriteLine("3. Hard       (1-1000)");
+            Console.WriteLine("4. Impossible (1-1 000 000)");
+            Console.WriteLine("5. Exit");
+            Console.Write("You chose: ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    PlayGame(1, 10);
+                    break;
+
+
+                case "2":
+                    PlayGame(1, 100);
+                    break;
+
+
+                case "3":
+                    PlayGame(1, 1000);
+                    break;
+
+
+                case "4":
+                    PlayGame(1, 1000000);
+                    break;
+
+
+                case "5":
+                    Console.WriteLine("Goodbye!");
+                    return;
+
+
+                default:
+                    Console.WriteLine("Error!!! select a valid option.");
+                    break;
+            }
+        }
+    }
+
+    static void PlayGame(int min, int max)
+    {
+        Console.WriteLine($"\nGuess the number between {min} and {max}.");
+        Random random = new Random();
+        int Realnumber = random.Next(min, max + 1);
+        int tries = 0;
+        bool guessS = false;
+
+        while (!guessS)
+        {
+            Console.Write("Enter your guess: ");
+            string x = Console.ReadLine();
+
+            if (int.TryParse(x, out int guess))
+            {
+                tries++;
+
+                if (guess < min || guess > max)
+                {
+                    Console.WriteLine($"Please enter a number between {min} and {max}.");
+                }
+                else 
+                
+                if (guess > Realnumber)
+                {
+                    Console.WriteLine("Too high!");
+                }
+
+                else 
+                
+                if (guess < Realnumber)
+                {
+                    Console.WriteLine("Too low!");
+                }
+
+                else
+                {
+                    guessS = true;
+                    Console.WriteLine($"Congratulations! You guessed the number {Realnumber} in {tries} attempts.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Error! enter a valid number.");
+            }
+        }
+    }
+}
