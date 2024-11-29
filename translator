@@ -1,0 +1,142 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+
+
+class Tarjimani
+
+{
+    static string fileP = "words.txt";
+
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Translator here what can i helpyou with");
+
+        if (!File.Exists(fileP))
+        {
+
+            File.WriteAllText(fileP, "hello,გამარჯობა,привет\n"); 
+
+        }
+
+        Dictionary<string, (string georgian, string russian)> leqsikoni = LoadTran();
+
+
+
+        while (true)
+        {
+            Console.WriteLine("\nSelect an option:");
+            Console.WriteLine("1. Translate a word");
+            Console.WriteLine("2. View all translations");
+            Console.WriteLine("3. Exit");
+            Console.Write("Your choice: ");
+            string choice = Console.ReadLine();
+
+
+
+            switch (choice)
+            {
+                case "1":
+                    Translate(leqsikoni);
+                    break;
+                case "2":
+                    ViewAl(leqsikoni);
+                    break;
+                case "3":
+                    SAve(leqsikoni);
+                    Console.WriteLine("Goodbye!");
+                    return;
+                default:
+                    Console.WriteLine("Invalid option. Please try again.");
+                    break;
+
+            }
+
+        }
+
+    }
+
+
+
+    static Dictionary<string, (string georgian, string russian)> LoadTran()
+    {
+        Dictionary<string, (string georgian, string russian)> dictionary = new Dictionary<string, (string, string)>();
+        foreach (var line in File.ReadLines(fileP))
+        {
+
+            var parts = line.Split(',');
+
+            if (parts.Length == 3)
+            {
+                dictionary[parts[0]] = (parts[1], parts[2]); 
+
+                dictionary[parts[1]] = (parts[0], parts[2]); 
+           
+                dictionary[parts[2]] = (parts[0], parts[1]);
+            }
+
+        }
+        return dictionary;
+    }
+
+    static void Translate(Dictionary<string, (string georgian, string russian)> dictionary)
+    {
+        Console.Write("\nEnter a word to translate: ");
+        string input = Console.ReadLine()?.Trim().ToLower();
+
+        if (dictionary.ContainsKey(input))
+        {
+            var translations = dictionary[input];
+            Console.WriteLine($"Georgian: {translations.georgian}");
+            Console.WriteLine($"Russian: {translations.russian}");
+        }
+        else
+        {
+            Console.WriteLine("Word not found in the dictionary. Let's add it!");
+
+            Console.Write("Enter the Georgian translation: ");
+            string georgian = Console.ReadLine()?.Trim().ToLower();
+
+            Console.Write("Enter the Russian translation: ");
+            string russian = Console.ReadLine()?.Trim().ToLower();
+
+            dictionary[input] = (georgian, russian);
+            dictionary[georgian] = (input, russian);
+            dictionary[russian] = (input, georgian);
+
+            Console.WriteLine("Word added successfully!");
+        }
+    }
+
+    static void ViewAl(Dictionary<string, (string georgian, string russian)> dictionary)
+    {
+        Console.WriteLine("\nAll Translations (English -> Georgian -> Russian):");
+        var newwords = new HashSet<string>();
+        foreach (var entry in dictionary)
+        {
+            if (!newwords.Contains(entry.Key))
+            {
+                newwords.Add(entry.Key);
+                var translations = dictionary[entry.Key];
+                Console.WriteLine($"{entry.Key} -> {translations.georgian} -> {translations.russian}");
+                newwords.Add(translations.georgian);
+                newwords.Add(translations.russian);
+            }
+        }
+    }
+
+    static void SAve(Dictionary<string, (string georgian, string russian)> dictionary)
+    {
+        var lines = new HashSet<string>();
+        foreach (var input in dictionary)
+        {
+            if (!lines.Contains($"{input.Key},{input.Value.georgian},{input.Value.russian}"))
+            {
+                lines.Add($"{input.Key},{input.Value.georgian},{input.Value.russian}");
+            }
+        }
+        File.WriteAllLines(fileP, lines);
+    }
+}
