@@ -1,0 +1,95 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq; 
+
+class BANKOMATI
+{
+    static void  Main(string[] args)
+    {
+
+        string filep = "DATA.txt";
+
+        if (!File.Exists(filep))
+        {
+           
+            File.WriteAllText(filep, "vigaca vigaca,1000"); 
+
+        }
+
+
+
+        string[] cusData = File.ReadAllText(filep).Split(',');
+
+        string cusName = cusData[0];
+
+        decimal balance = decimal.Parse(cusData[1]);
+
+        Console.WriteLine($"Welcome, {cusName}!");
+        Console.WriteLine("Welcome to the ATM Console Application!");
+
+
+
+        while (true)
+        {
+            Console.WriteLine("\nSelect an option:");
+            Console.WriteLine("1. check Balance");
+            Console.WriteLine("2. deposit Money");
+            Console.WriteLine("3. withdraw Money");
+            Console.WriteLine("4. exit");
+            Console.Write("Your choice: ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    Console.WriteLine($"\nYour current balance is: ${balance:F2}");
+                    break;
+
+                case "2":
+                    Console.Write("\n\nEnter the amount to deposit: ");
+                    if (decimal.TryParse(Console.ReadLine(), out decimal deposit) && deposit > 0)
+                    {
+                        balance += deposit;
+                        Console.WriteLine($"You have successfully deposited ${deposit:F2}. Your new balance is ${balance:F2}.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid amount. Please enter a positive number.");
+                    }
+                    break;
+
+                case "3":
+                    Console.Write("\nEnter the amount to withdraw ");
+                    if (decimal.TryParse(Console.ReadLine(), out decimal withdrawal) && withdrawal > 0)
+                    {
+                        if (withdrawal <= balance)
+                        {
+                            balance -= withdrawal;
+                            Console.WriteLine($"You have successfully withdrawn ${withdrawal:F2}. Your new balance is ${balance:F2}.");
+                        }
+
+                        else
+                        {
+                            Console.WriteLine("Not enough balance. Transaction declined.");
+                        }
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("Error! Please enter a positive number.");
+                    }
+                    break;
+
+                case "4":
+                    File.WriteAllText(filep, $"{cusName},{balance}");
+                    Console.WriteLine("Thank you for choosing our services Goodbye!");
+                    return;
+
+                default:
+                    Console.WriteLine("Invalid choice please try again.");
+                    break;
+            }
+        }
+    }
+}
