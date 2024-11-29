@@ -1,0 +1,194 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+
+class Book
+{
+    public string Name { get; private set; }
+    public string Author { get; private set; }
+    public int PublishYear { get; private set; }
+
+    public Book(string name, string author, int publishingYear)
+    {
+        Name = name;
+        Author = author;
+        PublishYear = publishingYear;
+    }
+
+    
+    public void DisBookInfo()
+    {
+        Console.WriteLine($"Name: {Name}");
+        Console.WriteLine($"Author: {Author}");
+        Console.WriteLine($"Publishing Year: {PublishYear}");
+    }
+}
+
+class BookManager
+{
+    private List<Book> books = new List<Book>();
+
+    public void AddBook(string name, string author, int publishingYear)
+    {
+ 
+        if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(author) || publishingYear <= 0)
+        {
+            Console.WriteLine("Invalid input. Please ensure all fields are filled correctly.");
+            return;
+        }
+
+        Book newBook = new Book(name, author, publishingYear);
+        books.Add(newBook);
+        Console.WriteLine("Book added successfully.");
+    }
+    //Chvenebis metodi
+    public void ShowAll()
+    {
+        if (books.Count == 0)
+        {
+            Console.WriteLine("No books available.");
+        }
+        else
+        {
+            foreach (var book in books)
+            {
+                book.DisBookInfo();
+                Console.WriteLine();
+            }
+        }
+    }
+
+    // dzebnis metodi
+    public void SearchBooks(string searchQuery)
+    {
+        var searchResults = books.Where(b => b.Name.ToLower().Contains(searchQuery.ToLower())).ToList();
+        SearchResults(searchResults);
+    }
+
+    // dzebna autorit
+    public void SearchbyAuthor(string author)
+    {
+        var searchResults = books.Where(b => b.Author.ToLower().Contains(author.ToLower())).ToList();
+        SearchResults(searchResults);
+    }
+
+    // dzebna wlit
+    public void SearchbyYear(int year)
+    {
+        var searchResults = books.Where(b => b.PublishYear == year).ToList();
+        SearchResults(searchResults);
+    }
+
+    // chveneba Shedegebis
+    private void SearchResults(List<Book> searchResults)
+    {
+        if (searchResults.Count == 0)
+        {
+            Console.WriteLine("No books found matching your criteria.");
+        }
+        else
+        {
+            foreach (var book in searchResults)
+            {
+                book.DisBookInfo();
+                Console.WriteLine();
+            }
+        }
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        BookManager bookManager = new BookManager();
+
+        while (true)
+        {
+            Console.WriteLine("Book Management System");
+            Console.WriteLine("1. Add a new book");
+            Console.WriteLine("2. View all books");
+            Console.WriteLine("3. Search books by name");
+            Console.WriteLine("4. Search books by author");
+            Console.WriteLine("5. Search books by publishing year");
+            Console.WriteLine("6. Exit");
+            Console.Write("Choose an option: ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    AddBookk(bookManager);
+                    break;
+                case "2":
+                    bookManager.ShowAll();
+                    break;
+                case "3":
+                    SearchbyName(bookManager);
+                    break;
+                case "4":
+                    SearchbyAuthorr(bookManager);
+                    break;
+                case "5":
+                    SearchbyYearr(bookManager);
+                    break;
+                case "6":
+                    Console.WriteLine("Exiting the system...");
+                    return;
+                default:
+                    Console.WriteLine("Invalid option. Please try again.");
+                    break;
+            }
+        }
+    }
+
+    static void AddBookk(BookManager bookManager)
+    {
+        Console.Write("Enter the name of the book: ");
+        string name = Console.ReadLine();
+        Console.Write("Enter the author of the book: ");
+        string author = Console.ReadLine();
+
+        int publishingYear = 0;
+        while (true)
+        {
+            Console.Write("Enter the publishing year of the book: ");
+            if (int.TryParse(Console.ReadLine(), out publishingYear) && publishingYear > 0)
+                break;
+            else
+                Console.WriteLine("Please enter a valid year.");
+        }
+
+        bookManager.AddBook(name, author, publishingYear);
+    }
+
+    static void SearchbyName(BookManager bookManager)
+    {
+        Console.Write("Enter the name of the book to search: ");
+        string name = Console.ReadLine();
+        bookManager.SearchBooks(name);
+    }
+
+    static void SearchbyAuthorr(BookManager bookManager)
+    {
+        Console.Write("Enter the author's name to search: ");
+        string author = Console.ReadLine();
+        bookManager.SearchbyAuthor(author);
+    }
+
+    static void SearchbyYearr(BookManager bookManager)
+    {
+        int year = 0;
+        while (true)
+        {
+            Console.Write("Enter the publishing year to search: ");
+            if (int.TryParse(Console.ReadLine(), out year) && year > 0)
+                break;
+            else
+                Console.WriteLine("Please enter a valid year.");
+        }
+
+        bookManager.SearchbyYear(year);
+    }
+}
