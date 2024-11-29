@@ -1,0 +1,705 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+/* 
+class Calculator
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("          calculator        ");
+        Console.WriteLine("------------------------------");
+
+        while (true)
+        {
+          
+            Console.Write("please enter the first number :  ");
+            double num1 = Convert.ToDouble(Console.ReadLine());
+
+          
+            Console.Write("enter the operation u want to perform (+, -, *, /, %): ");
+            char  operation= Console.ReadLine()[0];
+
+        
+            Console.Write("enter the second number ");
+            double num2 = Convert.ToDouble(Console.ReadLine());
+
+ 
+            double result = 0;
+            bool validOp = true;
+
+            if (operation == '+')
+            {
+                result = num1 + num2;
+            }
+            else 
+
+            if (operation == '-')
+            {
+                result = num1 - num2;
+            }
+            else
+            
+            if (operation == '*')
+            {
+                result = num1 * num2;
+            }
+            else 
+            
+            
+            if (operation == '%')
+            {
+                result = (num1*num2)/100;
+            }
+            else
+
+            if (operation == '/')
+            {
+                if (num2 != 0)
+                {
+                    result = num1 / num2;
+                }
+                else
+                {
+                    Console.WriteLine("Error: 0 you cannot divide by 0 ");
+                    validOp = false;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Error: Invalid operator ");
+                validOp = false;
+            }
+            if (validOp)
+            {
+                Console.WriteLine($"Result: {num1} {operation} {num2} = {result}");
+            }
+
+            Console.Write("\nDo you wish to perform another calculation? write \"y\" or \"Y\"instead of yes to continie: ");
+            char choice = Console.ReadLine()[0];
+            if (choice != 'y' && choice != 'Y')
+            {
+                Console.WriteLine("Goodbye!");
+                break;
+            }
+        }
+    }
+}*/
+/*
+class Numbergame
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("      Guess the Number Game       ");
+        Console.WriteLine("----------------------------------");
+        Console.WriteLine("             #####");
+        Console.WriteLine("            #     #");
+        Console.WriteLine("                  #");
+        Console.WriteLine("                 #");
+        Console.WriteLine("               ##");
+        Console.WriteLine("               #");
+        Console.WriteLine("               ");
+        Console.WriteLine("               #");
+        Console.WriteLine("----------------------------------");
+
+        while (true)
+        {
+            Console.WriteLine("\nSelect a difficulty level:");
+            Console.WriteLine("1. Easy       (1-10)");
+            Console.WriteLine("2. Medium     (1-100)");
+            Console.WriteLine("3. Hard       (1-1000)");
+            Console.WriteLine("4. Impossible (1-1 000 000)");
+            Console.WriteLine("5. Exit");
+            Console.Write("You chose: ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    PlayGame(1, 10);
+                    break;
+
+
+                case "2":
+                    PlayGame(1, 100);
+                    break;
+
+
+                case "3":
+                    PlayGame(1, 1000);
+                    break;
+
+
+                case "4":
+                    PlayGame(1, 1000000);
+                    break;
+
+
+                case "5":
+                    Console.WriteLine("Goodbye!");
+                    return;
+
+
+                default:
+                    Console.WriteLine("Error!!! select a valid option.");
+                    break;
+            }
+        }
+    }
+
+    static void PlayGame(int min, int max)
+    {
+        Console.WriteLine($"\nGuess the number between {min} and {max}.");
+        Random random = new Random();
+        int Realnumber = random.Next(min, max + 1);
+        int tries = 0;
+        bool guessS = false;
+
+        while (!guessS)
+        {
+            Console.Write("Enter your guess: ");
+            string x = Console.ReadLine();
+
+            if (int.TryParse(x, out int guess))
+            {
+                tries++;
+
+                if (guess < min || guess > max)
+                {
+                    Console.WriteLine($"Please enter a number between {min} and {max}.");
+                }
+                else 
+                
+                if (guess > Realnumber)
+                {
+                    Console.WriteLine("Too high!");
+                }
+
+                else 
+                
+                if (guess < Realnumber)
+                {
+                    Console.WriteLine("Too low!");
+                }
+
+                else
+                {
+                    guessS = true;
+                    Console.WriteLine($"Congratulations! You guessed the number {Realnumber} in {tries} attempts.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Error! enter a valid number.");
+            }
+        }
+    }
+}
+
+*/
+/*
+class BANKOMATI
+{
+    static void  Main(string[] args)
+    {
+
+        string filep = "DATA.txt";
+
+        if (!File.Exists(filep))
+        {
+           
+            File.WriteAllText(filep, "vigaca vigaca,1000"); 
+
+        }
+
+
+
+        string[] cusData = File.ReadAllText(filep).Split(',');
+
+        string cusName = cusData[0];
+
+        decimal balance = decimal.Parse(cusData[1]);
+
+        Console.WriteLine($"Welcome, {cusName}!");
+        Console.WriteLine("Welcome to the ATM Console Application!");
+
+
+
+        while (true)
+        {
+            Console.WriteLine("\nSelect an option:");
+            Console.WriteLine("1. check Balance");
+            Console.WriteLine("2. deposit Money");
+            Console.WriteLine("3. withdraw Money");
+            Console.WriteLine("4. exit");
+            Console.Write("Your choice: ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    Console.WriteLine($"\nYour current balance is: ${balance:F2}");
+                    break;
+
+                case "2":
+                    Console.Write("\n\nEnter the amount to deposit: ");
+                    if (decimal.TryParse(Console.ReadLine(), out decimal deposit) && deposit > 0)
+                    {
+                        balance += deposit;
+                        Console.WriteLine($"You have successfully deposited ${deposit:F2}. Your new balance is ${balance:F2}.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid amount. Please enter a positive number.");
+                    }
+                    break;
+
+                case "3":
+                    Console.Write("\nEnter the amount to withdraw ");
+                    if (decimal.TryParse(Console.ReadLine(), out decimal withdrawal) && withdrawal > 0)
+                    {
+                        if (withdrawal <= balance)
+                        {
+                            balance -= withdrawal;
+                            Console.WriteLine($"You have successfully withdrawn ${withdrawal:F2}. Your new balance is ${balance:F2}.");
+                        }
+
+                        else
+                        {
+                            Console.WriteLine("Not enough balance. Transaction declined.");
+                        }
+                    }
+
+                    else
+                    {
+                        Console.WriteLine("Error! Please enter a positive number.");
+                    }
+                    break;
+
+                case "4":
+                    File.WriteAllText(filep, $"{cusName},{balance}");
+                    Console.WriteLine("Thank you for choosing our services Goodbye!");
+                    return;
+
+                default:
+                    Console.WriteLine("Invalid choice please try again.");
+                    break;
+            }
+        }
+    }
+}
+*/
+/*
+class Hangman
+{
+    static void Main(string[] args)
+    {
+        
+        string[] words = { 
+
+
+           "ATM", "programming", "hangman", "console", "random", "money","star", "book","bookworm"
+        
+        };
+        Random random = new Random();
+        string theWord = words[random.Next(words.Length)].ToLower();
+
+       
+        char[] guessedWord = new string('_', theWord.Length).ToCharArray();
+        HashSet<char> guess = new HashSet<char>();
+        int tries = 6; 
+
+        Console.WriteLine("Welcome to Hangman!");
+        Console.WriteLine("  _______");
+        Console.WriteLine("  |     |");
+        Console.WriteLine("  |     O");
+        Console.WriteLine("  |    /|\\");
+        Console.WriteLine("  |    / \\");
+        Console.WriteLine("  |");
+        Console.WriteLine(" _|_");
+
+        Console.WriteLine("\nGuess the word, one letter at a time.");
+        Console.WriteLine($"The word has {theWord.Length} letters.\n");
+
+        while (tries > 0 && new string(guessedWord) != theWord)
+        {
+            Console.WriteLine($"Word: {new string(guessedWord)}");
+            Console.WriteLine($"Attempts remaining: {tries}");
+            Console.Write("Guess a letter: ");
+            string input = Console.ReadLine()?.ToLower();
+
+            if (string.IsNullOrWhiteSpace(input) || input.Length != 1 || !char.IsLetter(input[0]))
+            {
+                Console.WriteLine("Please enter a single valid letter.");
+                continue;
+            }
+
+            char guessedLetter = input[0];
+
+            if (guess.Contains(guessedLetter))
+            {
+                Console.WriteLine("You already guessed that letter. Try another one.");
+                continue;
+            }
+
+            guess.Add(guessedLetter);
+
+            if (theWord.Contains(guessedLetter))
+            {
+                Console.WriteLine($"Good job! The letter '{guessedLetter}' is in the word.");
+                for (int i = 0; i < theWord.Length; i++)
+                {
+                    if (theWord[i] == guessedLetter)
+                    {
+                        guessedWord[i] = guessedLetter;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Sorry, the letter '{guessedLetter}' is not in the word.");
+                tries--;
+            }
+
+            Console.WriteLine();
+        }
+
+        if (new string(guessedWord) == theWord)
+        {
+            Console.WriteLine($"Congratulations! You guessed the word: {theWord}");
+        }
+        else
+        {
+            Console.WriteLine($"Game over! The word was: {theWord}");
+        }
+    }
+}
+*/
+/*
+class Tarjimani
+{
+    static string fileP = "words.txt";
+
+
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Translator here what can i helpyou with");
+
+        if (!File.Exists(fileP))
+        {
+
+            File.WriteAllText(fileP, "hello,გამარჯობა,привет\n"); 
+
+        }
+
+        Dictionary<string, (string georgian, string russian)> leqsikoni = LoadTran();
+
+
+
+        while (true)
+        {
+            Console.WriteLine("\nSelect an option:");
+            Console.WriteLine("1. Translate a word");
+            Console.WriteLine("2. View all translations");
+            Console.WriteLine("3. Exit");
+            Console.Write("Your choice: ");
+            string choice = Console.ReadLine();
+
+
+
+            switch (choice)
+            {
+                case "1":
+                    Translate(leqsikoni);
+                    break;
+                case "2":
+                    ViewAl(leqsikoni);
+                    break;
+                case "3":
+                    SAve(leqsikoni);
+                    Console.WriteLine("Goodbye!");
+                    return;
+                default:
+                    Console.WriteLine("Invalid option. Please try again.");
+                    break;
+
+            }
+
+        }
+
+    }
+
+
+
+    static Dictionary<string, (string georgian, string russian)> LoadTran()
+    {
+        Dictionary<string, (string georgian, string russian)> dictionary = new Dictionary<string, (string, string)>();
+        foreach (var line in File.ReadLines(fileP))
+        {
+
+            var parts = line.Split(',');
+
+            if (parts.Length == 3)
+            {
+                dictionary[parts[0]] = (parts[1], parts[2]); 
+
+                dictionary[parts[1]] = (parts[0], parts[2]); 
+           
+                dictionary[parts[2]] = (parts[0], parts[1]);
+            }
+
+        }
+        return dictionary;
+    }
+
+    static void Translate(Dictionary<string, (string georgian, string russian)> dictionary)
+    {
+        Console.Write("\nEnter a word to translate: ");
+        string input = Console.ReadLine()?.Trim().ToLower();
+
+        if (dictionary.ContainsKey(input))
+        {
+            var translations = dictionary[input];
+            Console.WriteLine($"Georgian: {translations.georgian}");
+            Console.WriteLine($"Russian: {translations.russian}");
+        }
+        else
+        {
+            Console.WriteLine("Word not found in the dictionary. Let's add it!");
+
+            Console.Write("Enter the Georgian translation: ");
+            string georgian = Console.ReadLine()?.Trim().ToLower();
+
+            Console.Write("Enter the Russian translation: ");
+            string russian = Console.ReadLine()?.Trim().ToLower();
+
+            dictionary[input] = (georgian, russian);
+            dictionary[georgian] = (input, russian);
+            dictionary[russian] = (input, georgian);
+
+            Console.WriteLine("Word added successfully!");
+        }
+    }
+
+    static void ViewAl(Dictionary<string, (string georgian, string russian)> dictionary)
+    {
+        Console.WriteLine("\nAll Translations (English -> Georgian -> Russian):");
+        var newwords = new HashSet<string>();
+        foreach (var entry in dictionary)
+        {
+            if (!newwords.Contains(entry.Key))
+            {
+                newwords.Add(entry.Key);
+                var translations = dictionary[entry.Key];
+                Console.WriteLine($"{entry.Key} -> {translations.georgian} -> {translations.russian}");
+                newwords.Add(translations.georgian);
+                newwords.Add(translations.russian);
+            }
+        }
+    }
+
+    static void SAve(Dictionary<string, (string georgian, string russian)> dictionary)
+    {
+        var lines = new HashSet<string>();
+        foreach (var input in dictionary)
+        {
+            if (!lines.Contains($"{input.Key},{input.Value.georgian},{input.Value.russian}"))
+            {
+                lines.Add($"{input.Key},{input.Value.georgian},{input.Value.russian}");
+            }
+        }
+        File.WriteAllLines(fileP, lines);
+    }
+}
+*/
+/*
+class Book
+{
+    public string Name { get; private set; }
+    public string Author { get; private set; }
+    public int PublishYear { get; private set; }
+
+    public Book(string name, string author, int publishingYear)
+    {
+        Name = name;
+        Author = author;
+        PublishYear = publishingYear;
+    }
+
+    
+    public void DisBookInfo()
+    {
+        Console.WriteLine($"Name: {Name}");
+        Console.WriteLine($"Author: {Author}");
+        Console.WriteLine($"Publishing Year: {PublishYear}");
+    }
+}
+
+class BookManager
+{
+    private List<Book> books = new List<Book>();
+
+    public void AddBook(string name, string author, int publishingYear)
+    {
+ 
+        if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(author) || publishingYear <= 0)
+        {
+            Console.WriteLine("Invalid input. Please ensure all fields are filled correctly.");
+            return;
+        }
+
+        Book newBook = new Book(name, author, publishingYear);
+        books.Add(newBook);
+        Console.WriteLine("Book added successfully.");
+    }
+    //Chvenebis metodi
+    public void ShowAll()
+    {
+        if (books.Count == 0)
+        {
+            Console.WriteLine("No books available.");
+        }
+        else
+        {
+            foreach (var book in books)
+            {
+                book.DisBookInfo();
+                Console.WriteLine();
+            }
+        }
+    }
+
+    // dzebnis metodi
+    public void SearchBooks(string searchQuery)
+    {
+        var searchResults = books.Where(b => b.Name.ToLower().Contains(searchQuery.ToLower())).ToList();
+        SearchResults(searchResults);
+    }
+
+    // dzebna autorit
+    public void SearchbyAuthor(string author)
+    {
+        var searchResults = books.Where(b => b.Author.ToLower().Contains(author.ToLower())).ToList();
+        SearchResults(searchResults);
+    }
+
+    // dzebna wlit
+    public void SearchbyYear(int year)
+    {
+        var searchResults = books.Where(b => b.PublishYear == year).ToList();
+        SearchResults(searchResults);
+    }
+
+    // chveneba Shedegebis
+    private void SearchResults(List<Book> searchResults)
+    {
+        if (searchResults.Count == 0)
+        {
+            Console.WriteLine("No books found matching your criteria.");
+        }
+        else
+        {
+            foreach (var book in searchResults)
+            {
+                book.DisBookInfo();
+                Console.WriteLine();
+            }
+        }
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        BookManager bookManager = new BookManager();
+
+        while (true)
+        {
+            Console.WriteLine("Book Management System");
+            Console.WriteLine("1. Add a new book");
+            Console.WriteLine("2. View all books");
+            Console.WriteLine("3. Search books by name");
+            Console.WriteLine("4. Search books by author");
+            Console.WriteLine("5. Search books by publishing year");
+            Console.WriteLine("6. Exit");
+            Console.Write("Choose an option: ");
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    AddBookk(bookManager);
+                    break;
+                case "2":
+                    bookManager.ShowAll();
+                    break;
+                case "3":
+                    SearchbyName(bookManager);
+                    break;
+                case "4":
+                    SearchbyAuthorr(bookManager);
+                    break;
+                case "5":
+                    SearchbyYearr(bookManager);
+                    break;
+                case "6":
+                    Console.WriteLine("Exiting the system...");
+                    return;
+                default:
+                    Console.WriteLine("Invalid option. Please try again.");
+                    break;
+            }
+        }
+    }
+
+    static void AddBookk(BookManager bookManager)
+    {
+        Console.Write("Enter the name of the book: ");
+        string name = Console.ReadLine();
+        Console.Write("Enter the author of the book: ");
+        string author = Console.ReadLine();
+
+        int publishingYear = 0;
+        while (true)
+        {
+            Console.Write("Enter the publishing year of the book: ");
+            if (int.TryParse(Console.ReadLine(), out publishingYear) && publishingYear > 0)
+                break;
+            else
+                Console.WriteLine("Please enter a valid year.");
+        }
+
+        bookManager.AddBook(name, author, publishingYear);
+    }
+
+    static void SearchbyName(BookManager bookManager)
+    {
+        Console.Write("Enter the name of the book to search: ");
+        string name = Console.ReadLine();
+        bookManager.SearchBooks(name);
+    }
+
+    static void SearchbyAuthorr(BookManager bookManager)
+    {
+        Console.Write("Enter the author's name to search: ");
+        string author = Console.ReadLine();
+        bookManager.SearchbyAuthor(author);
+    }
+
+    static void SearchbyYearr(BookManager bookManager)
+    {
+        int year = 0;
+        while (true)
+        {
+            Console.Write("Enter the publishing year to search: ");
+            if (int.TryParse(Console.ReadLine(), out year) && year > 0)
+                break;
+            else
+                Console.WriteLine("Please enter a valid year.");
+        }
+
+        bookManager.SearchbyYear(year);
+    }
+}
+*/
