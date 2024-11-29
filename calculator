@@ -1,0 +1,87 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+
+class Calculator
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("          calculator        ");
+        Console.WriteLine("------------------------------");
+
+        while (true)
+        {
+          
+            Console.Write("please enter the first number :  ");
+            double num1 = Convert.ToDouble(Console.ReadLine());
+
+          
+            Console.Write("enter the operation u want to perform (+, -, *, /, %): ");
+            char  operation= Console.ReadLine()[0];
+
+        
+            Console.Write("enter the second number ");
+            double num2 = Convert.ToDouble(Console.ReadLine());
+
+ 
+            double result = 0;
+            bool validOp = true;
+
+            if (operation == '+')
+            {
+                result = num1 + num2;
+            }
+            else 
+
+            if (operation == '-')
+            {
+                result = num1 - num2;
+            }
+            else
+            
+            if (operation == '*')
+            {
+                result = num1 * num2;
+            }
+            else 
+            
+            
+            if (operation == '%')
+            {
+                result = (num1*num2)/100;
+            }
+            else
+
+            if (operation == '/')
+            {
+                if (num2 != 0)
+                {
+                    result = num1 / num2;
+                }
+                else
+                {
+                    Console.WriteLine("Error: 0 you cannot divide by 0 ");
+                    validOp = false;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Error: Invalid operator ");
+                validOp = false;
+            }
+            if (validOp)
+            {
+                Console.WriteLine($"Result: {num1} {operation} {num2} = {result}");
+            }
+
+            Console.Write("\nDo you wish to perform another calculation? write \"y\" or \"Y\"instead of yes to continie: ");
+            char choice = Console.ReadLine()[0];
+            if (choice != 'y' && choice != 'Y')
+            {
+                Console.WriteLine("Goodbye!");
+                break;
+            }
+        }
+    }
+}
